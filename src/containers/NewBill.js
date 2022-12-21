@@ -20,25 +20,37 @@ export default class NewBill {
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
     const filePath = e.target.value.split(/\\/g)
     const fileName = filePath[filePath.length-1]
-    const formData = new FormData()
-    const email = JSON.parse(localStorage.getItem("user")).email
-    formData.append('file', file)
-    formData.append('email', email)
-
-    this.store
-      .bills()
-      .create({
-        data: formData,
-        headers: {
-          noContentType: true
-        }
-      })
-      .then(({fileUrl, key}) => {
-        console.log(fileUrl)
-        this.billId = key
-        this.fileUrl = fileUrl
-        this.fileName = fileName
-      }).catch(error => console.error(error))
+    // bug 3: file type/extension 
+    // -> add accept attribute to input type file (in NewBillUI)
+    // -> add extension check in js as followed:
+    const fileExtension = file.name.split(".").pop();
+    const extensionAllowed = ['jpg','jpeg','png'];
+    if(extensionAllowed.indexOf(fileExtension) !== -1){
+      // hide error if user try several times
+      document.querySelector(".format-error").style.display = "none"
+      // save the file
+      const formData = new FormData()
+      const email = JSON.parse(localStorage.getItem("user")).email
+      formData.append('file', file)
+      formData.append('email', email)
+      this.store
+        .bills()
+        .create({
+          data: formData,
+          headers: {
+            noContentType: true
+          }
+        })
+        .then(({fileUrl, key}) => {
+          console.log(fileUrl)
+          this.billId = key
+          this.fileUrl = fileUrl
+          this.fileName = fileName
+        }).catch(error => console.error(error))
+    }else{
+      console.log('Format file error: not an image (.jpg, .jpeg and .png accepted')
+      document.querySelector(".format-error").style.display = "block"
+    }
   }
   handleSubmit = e => {
     e.preventDefault()
