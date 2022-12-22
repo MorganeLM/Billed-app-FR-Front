@@ -48,7 +48,7 @@ export default class NewBill {
           this.fileName = fileName
         }).catch(error => console.error(error))
     }else{
-      console.log('Format file error: not an image (.jpg, .jpeg and .png accepted')
+      console.log('Format file error: not an image (.jpg, .jpeg and .png accepted)')
       document.querySelector(".format-error").style.display = "block"
     }
   }

@@ -86,22 +86,32 @@ export default class {
   }
 
   handleEditTicket(e, bill, bills) {
+    console.log(this.counter, bill)
     if (this.counter === undefined || this.id !== bill.id) this.counter = 0
     if (this.id === undefined || this.id !== bill.id) this.id = bill.id
-    if (this.counter % 2 === 0) {
-      bills.forEach(b => {
+
+    if (this.counter % 2 === 0) { // counter is odd number => open
+      // display all cards in blue
+      bills.forEach(b => { 
         $(`#open-bill${b.id}`).css({ background: '#0D5AE5' })
       })
+      // display the selected card in black
       $(`#open-bill${bill.id}`).css({ background: '#2A2B35' })
+      // display the selected bill detail
       $('.dashboard-right-container div').html(DashboardFormUI(bill))
+      // "correct" a bug of display on vertical nav
       $('.vertical-navbar').css({ height: '150vh' })
       this.counter ++
-    } else {
-      $(`#open-bill${bill.id}`).css({ background: '#0D5AE5' })
+    }
 
+    else { // counter is even number => close
+      // display the selected card in blue
+      $(`#open-bill${bill.id}`).css({ background: '#0D5AE5' })
+      // display big icon instead of bill details
       $('.dashboard-right-container div').html(`
         <div id="big-billed-icon" data-testid="big-billed-icon"> ${BigBilledIcon} </div>
       `)
+      // "reset" vertical nav size
       $('.vertical-navbar').css({ height: '120vh' })
       this.counter ++
     }
@@ -133,20 +143,26 @@ export default class {
   handleShowTickets(e, bills, index) {
     if (this.counter === undefined || this.index !== index) this.counter = 0
     if (this.index === undefined || this.index !== index) this.index = index
-    if (this.counter % 2 === 0) {
+    if (this.counter % 2 === 0) { // counter is odd number -> open/fill section
       $(`#arrow-icon${this.index}`).css({ transform: 'rotate(0deg)'})
       $(`#status-bills-container${this.index}`)
         .html(cards(filteredBills(bills, getStatus(this.index))))
       this.counter ++
-    } else {
+    } else { // counter is even number -> close/empty section
       $(`#arrow-icon${this.index}`).css({ transform: 'rotate(90deg)'})
       $(`#status-bills-container${this.index}`)
         .html("")
       this.counter ++
     }
-
+  
+    // Bug 4: EventListenner is added and triggered several times -> target only the concerned section/container
+    // bills.forEach(bill => {
+    //   $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
+    // })
     bills.forEach(bill => {
-      $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
+      $(`#status-bills-container${index} #open-bill${bill.id}`).click((e) => {
+        this.handleEditTicket(e, bill, bills)
+      })
     })
 
     return bills
