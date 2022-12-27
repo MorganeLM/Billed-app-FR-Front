@@ -32,7 +32,7 @@ const mockedBills = {
       },
       {
         "id": "UIUZtnPQvnbFnB0ozvJh",
-        "name": "test3",
+        "name": "test2",
         "email": "a@a",
         "type": "Services en ligne",
         "vat": "60",
@@ -51,7 +51,7 @@ const mockedBills = {
         "pct": 20,
         "amount": 200,
         "email": "a@a",
-        "name": "test2",
+        "name": "test3",
         "vat": "40",
         "fileName": "preview-facture-free-201801-pdf-1.jpg",
         "date": "2002-02-02",
