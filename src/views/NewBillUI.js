@@ -56,14 +56,14 @@ export default () => {
                   <div class="col-half">
                     <label for="file" class="bold-label">Justificatif</label>
                     <input required type="file" class="form-control blue-border" data-testid="file" />
-                    <p class="format-error" style='display:none; color:red'>Format non accepté, le fichier doit être une image de type jpg ou png.</p>
+                    <p class="format-error" style='display:none; color:red' data-testid="file-error">Format non accepté, le fichier doit être une image de type jpg ou png.</p>
                   </div>
                 </div>
             </div>
             <div class="row">
               <div class="col-md-6">
                 <div class="col-half">
-                  <button type="submit" id='btn-send-bill' class="btn btn-primary">Envoyer</button>
+                  <button type="submit" id='btn-send-bill'  data-testid="btn-send-bill" class="btn btn-primary">Envoyer</button>
                 </div>
               </div>
             </div>

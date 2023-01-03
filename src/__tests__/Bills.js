@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import {fireEvent, screen, waitFor} from "@testing-library/dom"
+import {screen, waitFor} from "@testing-library/dom"
 import userEvent from '@testing-library/user-event'
 import BillsUI from "../views/BillsUI.js"
 import Bills from '../containers/Bills.js'
@@ -62,7 +62,7 @@ describe("Given I am connected as an employee", () => {
   })
 
   describe("When I am on Bills Page and I click on eye icon", () => {
-    test("Then the bill modal (opens)is present", () => {
+    test("Then the bill modal is present", () => {
       const html = BillsUI({ data: bills })
       document.body.innerHTML = html
       //const iconEye = screen.getAllByTestId("icon-eye");
@@ -70,7 +70,7 @@ describe("Given I am connected as an employee", () => {
       expect(screen.getByTestId("bill-modal-title").textContent).toEqual("Justificatif");
     })
 
-    test("Then modal opens and contain an image", async () => {
+    test("Then modal opens and contains an image", async () => {
       const html = BillsUI({ data: bills })
       document.body.innerHTML = html
       const mockedBills = new Bills({ document, onNavigate, firestore: null, bills, localStorage: localStorageMock })          
@@ -108,7 +108,6 @@ describe("Given I am connected as an employee", () => {
       expect(handleClickNewBill).toHaveBeenCalled()
       //expect(window.location.href).toEqual("http://localhost/#employee/bill/new")
     })
-
   })
 
 })
@@ -139,8 +138,6 @@ describe("Given I am a user connected as Employee", () => {
       expect(billNames).toContain("test2")
       expect(billNames).toContain("test3")
     })
-
-
 
 
     // idem as in Dashboard 

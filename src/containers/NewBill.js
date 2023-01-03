@@ -26,7 +26,7 @@ export default class NewBill {
     const fileExtension = file.name.split(".").pop();
     const extensionAllowed = ['jpg','jpeg','png'];
     if(extensionAllowed.indexOf(fileExtension) !== -1){
-      // hide error if user try several times
+      // hide error if user retry with a wright file
       document.querySelector(".format-error").style.display = "none"
       // save the file
       const formData = new FormData()
@@ -74,6 +74,7 @@ export default class NewBill {
   }
 
   // not need to cover this function by tests
+  /* istanbul ignore next */
   updateBill = (bill) => {
     if (this.store) {
       this.store
