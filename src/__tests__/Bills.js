@@ -13,25 +13,6 @@ import router from "../app/Router.js";
 // mock like on Dashboard.js
 jest.mock("../app/store", () => mockStore);
 const onNavigate = (pathname) => { document.body.innerHTML = ROUTES({ pathname }) }
-// mockImplementation
-// window.$ = jest.fn().mockImplementation(() => {
-//   return {
-//     click: jest.fn(),
-//     width: jest.fn(),
-//     find: jest.fn().mockImplementation(() => {
-//       return {
-//         HTMLElement: `<div class="modal-body">
-//         </div>`,
-//         html: jest.fn(),
-//       };
-//     }),
-//     modal: jest.fn().mockImplementation(() => {
-//       return {
-//         click: jest.fn(),
-//       };
-//     }),
-//   };
-// });
 
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
