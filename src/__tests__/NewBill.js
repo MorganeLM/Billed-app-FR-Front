@@ -148,5 +148,23 @@ describe("Given I am connected as an employee", () => {
       await new Promise(process.nextTick)
       expect(console.error).toHaveBeenCalled()
     })
+    test("fetches error from an API and fails with 404 error", async () => {
+      jest.spyOn(mockStore, "bills");
+      jest.spyOn(console, "error").mockImplementation(() => {}) // Prevent jest error
+      mockStore.bills.mockImplementationOnce(() => {
+        return {
+          update: () => {
+            return Promise.reject(new Error("Erreur 404"));
+          },
+        }
+      })
+      const newBill = new NewBill({ document, onNavigate, store: mockStore, localStorage: window.localStorage })
+      const form = screen.getByTestId("form-new-bill")
+      const handleSubmit = jest.fn((e) => newBill.handleSubmit(e))
+      form.addEventListener("submit", handleSubmit)
+      fireEvent.submit(form)
+      await new Promise(process.nextTick)
+      expect(console.error).toHaveBeenCalled()
+    })
   })
 })
